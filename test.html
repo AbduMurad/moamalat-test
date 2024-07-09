@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://tnpg.moamalat.net:6006/js/lightbox.js"></script>
+</head>
+<body class="p-10">
+    <form action="">
+        <button autofocus type="submit" id="buy" class="py-2 px-4 bg-blue-500 hover:text-white font-bold rounded-full bg-transparent border border-blue-500 hover:bg-blue-500">Click To Buy</button>
+    </form>
+
+    <script>
+
+        document.getElementById('buy').addEventListener('click', function (event) {
+            event.preventDefault();
+            
+            const configurations = {
+                MID: '10081014649',
+                TID: '99179395',
+                AmountTrxn: "250",
+                MerchantReference: 'test-demo',
+                TrxDateTime: "202009171418",
+                // SecureHash: '39636630633731362D663963322D346362642D386531662D633963303432353936373431',
+            }
+
+            const response = Lightbox.Checkout.configure = {
+                ...configurations,
+                completeCallback: function (data) {
+                    console.log('Payment Complete:', data);
+                },
+                errorCallback: function (error) {
+                    console.log('Payment Error:', error);
+                },
+                cancelCallback: function () {
+                    console.log('Payment Cancelled');
+                },
+            };
+            console.log(Lightbox.Checkout);
+            Lightbox.Checkout.showLightbox();
+            // Lightbox.Checkout.showPaymentPage();
+        });
+    </script>
+</body>
+</html>
